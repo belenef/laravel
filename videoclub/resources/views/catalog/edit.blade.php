@@ -23,7 +23,7 @@
                   name="title" 
                   id="title" 
                   class="form-control"
-                  value="{{ $pelicula['title'] }}"
+                  value="{{ $pelicula->title }}"
                >
             </div>
 
@@ -35,7 +35,7 @@
                   name="year" 
                   id="year" 
                   class="form-control"
-                  value="{{ $pelicula['year'] }}"
+                  value="{{ $pelicula->year }}"
                >
             </div>
 
@@ -47,7 +47,7 @@
                   name="director" 
                   id="director" 
                   class="form-control"
-                  value="{{ $pelicula['director'] }}"
+                  value="{{ $pelicula->director }}"
                >
             </div>
 
@@ -59,7 +59,7 @@
                   name="poster" 
                   id="poster" 
                   class="form-control"
-                  value="{{ $pelicula['poster'] }}"
+                  value="{{ $pelicula->poster }}"
                >
             </div>
 
@@ -70,7 +70,7 @@
                   id="synopsis" 
                   class="form-control" 
                   rows="3"
-               >{{ $pelicula['synopsis'] }}</textarea>
+               >{{ $pelicula->synopsis }}</textarea>
             </div>
 
             <div class="form-group text-center">

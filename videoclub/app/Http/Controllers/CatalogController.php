@@ -3,47 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Movie;
 
 class CatalogController extends Controller
 {
-    private $arrayPeliculas;
+    // private $arrayPeliculas;
 
-    public function __construct()
-    {
-        // Cargar el array desde el archivo
-        $this->arrayPeliculas = require 'array_peliculas.php';
-    }
+    // public function __construct()
+    // {
+    //     // Cargar el array desde el archivo
+    //     $this->arrayPeliculas = require 'array_peliculas.php';
+    // }
     public function getIndex()
     {
+        $movies = Movie::all(); // Obtener todas las películas desde la base de datos
+
         return view('catalog.index', [
-            'arrayPeliculas' => $this->arrayPeliculas
+            'arrayPeliculas' => $movies
         ]);
     }
     
     public function getShow($id)
     {
-        // Verificar que exista la película
-        if (!isset($this->arrayPeliculas[$id])) {
-            abort(404, 'Película no encontrada');
-        }
+        $pelicula = Movie::findOrFail($id); // Buscar la película por su ID o lanzar un error 404 si no se encuentra
 
-        // Pasar la película a la vista
         return view('catalog.show', [
-            'pelicula' => $this->arrayPeliculas[$id],
+            'pelicula' => $pelicula,
             'id' => $id
         ]);
     }
 
     public function getEdit($id)
     {
-        // Verificar que exista la película
-        if (!isset($this->arrayPeliculas[$id])) {
-            abort(404, 'Película no encontrada');
-        }
-
+        $pelicula = Movie :: findOrFail($id); // Buscar la película por su ID o lanzar un error 404 si no se encuentra
         // Pasar la película a la vista de edición
         return view('catalog.edit', [
-            'pelicula' => $this->arrayPeliculas[$id],
+            'pelicula' => $pelicula,
             'id' => $id
         ]);
     }
