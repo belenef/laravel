@@ -10,7 +10,7 @@
          <div class="card-body" style="padding:30px">
 
             {{-- TODO: Abrir el formulario e indicar el método POST --}}
-            <form action="{{ url('/catalog/' . $pelicula->id) }}" method="POST">
+            <form action="{{ url('/catalog/edit/' . $pelicula->id) }}" method="POST">
 
             {{-- TODO: Protección contra CSRF --}}
             @csrf

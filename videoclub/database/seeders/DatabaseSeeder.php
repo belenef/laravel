@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
+        $this->seedUsers(); // inicializa usuarios
         $this->seedCatalog(); // inicializa la tabla movies
         $this->command->info('Tabla catalogo inicializada con datos!');
     }
@@ -48,5 +49,23 @@ class DatabaseSeeder extends Seeder
             $p->synopsis = $pelicula['synopsis'];
             $p->save();
         }
+    }
+
+    // funcion para inicializar usuarios
+    private function seedUsers(): void
+    {
+        User::truncate(); // vacio la tabla users
+
+        User::create([
+            'name' => 'Usuario Uno',
+            'email' => 'usuario1@example.com',
+            'password' => bcrypt('password123'),
+        ]);
+
+        User::create([
+            'name' => 'Usuario Dos',
+            'email' => 'usuario2@example.com',
+            'password' => bcrypt('password123'),
+        ]);
     }
 }

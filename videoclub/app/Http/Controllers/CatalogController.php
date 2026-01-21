@@ -49,4 +49,41 @@ class CatalogController extends Controller
         return view('catalog.create');
     }
 
+   public function postCreate(Request $request)
+    {
+        // 1. Crear una nueva instancia de Movie
+        $movie = new Movie();
+
+        // 2. Asignar valores desde el formulario
+        $movie->title = $request->input('title');
+        $movie->director = $request->input('director');
+        $movie->year = $request->input('year');
+
+        $movie->poster = $request->input('poster');
+        $movie->synopsis = $request->input('synopsis');
+
+        // 3. Guardar en la base de datos
+        $movie->save();
+
+        // 4. Redirigir al catálogo
+        return redirect('/catalog');
+    }
+
+    public function putEdit(Request $request, $id)
+    {
+        // 1. Recuperar la película por ID
+        $movie = Movie::findOrFail($id);
+
+        // 2. Actualizar valores
+        $movie->title = $request->input('title');
+        $movie->director = $request->input('director');
+        $movie->year = $request->input('year');
+
+        // 3. Guardar cambios
+        $movie->save();
+
+        // 4. Redirigir a la vista detalle de la película
+        return redirect('/catalog/show/' . $movie->id);
+    }
+
 }

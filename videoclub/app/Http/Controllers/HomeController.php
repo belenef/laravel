@@ -8,6 +8,10 @@ class HomeController extends Controller
 {
     public function getHome()
     {
-        return view('home'); //apunta a la vista home
+        //si el usuario no esta logueado lo redirige al login
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+        return view('home');
     }
 }

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,8 +67,22 @@ Route::get('/', function () {
 // });
 
 // DEVUELVEN VISTAS A TRAVÉS DE UN CONTROLADOR
-Route::get('/', [HomeController::class, 'getHome']);
-Route::get('/catalog', [CatalogController::class, 'getIndex']);
-Route::get('/catalog/show/{id}', [CatalogController::class, 'getShow']);
-Route::get('/catalog/edit/{id}', [CatalogController::class, 'getEdit']);
-Route::get('/catalog/create', [CatalogController::class, 'getCreate']);
+Route::middleware(['auth'])->group(function () {
+
+    // Vistas
+    Route::get('/catalog', [CatalogController::class, 'getIndex'])->name('catalog.index');
+    Route::get('/catalog/show/{id}', [CatalogController::class, 'getShow'])->name('catalog.show');
+    Route::get('/catalog/create', [CatalogController::class, 'getCreate'])->name('catalog.create');
+    Route::get('/catalog/edit/{id}', [CatalogController::class, 'getEdit'])->name('catalog.edit');
+
+    // Formularios
+    Route::post('/catalog/create', [CatalogController::class, 'postCreate'])->name('catalog.store');
+    Route::put('/catalog/edit/{id}', [CatalogController::class, 'putEdit'])->name('catalog.update');
+});
+
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
+
